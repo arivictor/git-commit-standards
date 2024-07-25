@@ -14,18 +14,18 @@ inputs:
     description: 'Whether the subject line must not end with a period'
     required: false
     default: true
-  first-word-in-subject-line-is-imperative-verb:
+  first-word-in-subject-line-must-be-imperative-verb:
     description: 'Whether the first word in the subject line must be an imperative verb'
     required: false
     default: true
   body-must-have-blank-line:
-    description: 'Whether the body must have a blank line between it and the subject line'
+    description: 'Whether the body must have a blank line between it and the subject line (default is true)'
     required: false
     default: true
-  body-must-be-wrapped-at-72-characters:
-    description: 'Whether the body must be wrapped at 72 characters'
+  body-line-max-length:
+    description: 'The maximum length of a line in the body (default is 72 characters)'
     required: false
-    default: true
+    default: 72
 outputs:
   time: # id of output
     description: 'The time we greeted you'
@@ -36,6 +36,6 @@ runs:
     - ${{ inputs.must-have-subject-line }}
     - ${{ inputs.subject-line-capitalised }}
     - ${{ inputs.no-period-at-end-of-subject-line }}
-    - ${{ inputs.first-word-in-subject-line-is-imperative-verb }}
+    - ${{ inputs.first-word-in-subject-line-must-be-imperative-verb }}
     - ${{ inputs.body-must-have-blank-line }}
-    - ${{ inputs.body-must-be-wrapped-at-72-characters }}
+    - ${{ inputs.body-line-max-length }}
