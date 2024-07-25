@@ -27,11 +27,14 @@ function log() {
   fi
 }
 
+# Fetch all remote branches
+git fetch --all
+
 # Default to master if no argument is provided
 BASE_BRANCH=$(git branch -r | grep -E 'origin/(main|master)' | sed 's/origin\///' | head -n 1)
 BASE_BRANCH=${BASE_BRANCH:-main}
 
-# Default to HEAD if no argument is provided
+# Default to HEAD
 CURRENT_BRANCH=HEAD
 
 log "Checking commit messages between:"
@@ -39,20 +42,21 @@ log "- base branch: $BASE_BRANCH"
 log "- current branch: $CURRENT_BRANCH"
 log ""
 
-# Check if branches exist locally
-if ! git rev-parse --verify "$BASE_BRANCH" >/dev/null 2>&1; then
+# Check if the base branch exists
+if ! git rev-parse --verify "origin/$BASE_BRANCH" >/dev/null 2>&1; then
     log "❌ Failed: Base branch $BASE_BRANCH does not exist"
     exit 1
 fi
 
+# Ensure HEAD is valid
 if ! git rev-parse --verify "$CURRENT_BRANCH" >/dev/null 2>&1; then
     log "❌ Failed: Current branch $CURRENT_BRANCH does not exist"
     exit 1
 fi
 
-# Fetch all commits from the current branch compared to the base branch
+# Fetch commits between the base branch and HEAD
 COMMITS=()
-if ! GIT_COMMITS=$(git log "$BASE_BRANCH".."$CURRENT_BRANCH" --no-merges --format="%H"); then
+if ! GIT_COMMITS=$(git log "origin/$BASE_BRANCH..$CURRENT_BRANCH" --no-merges --format="%H"); then
   log "❌ Failed fetching commits between $BASE_BRANCH and $CURRENT_BRANCH. Please check the branches."
   exit 1
 fi
