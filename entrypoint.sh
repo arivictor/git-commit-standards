@@ -28,10 +28,11 @@ function log() {
 }
 
 # Default to master if no argument is provided
-BASE_BRANCH=${1:-master}
+BASE_BRANCH=$(git branch -r | grep -E 'origin/(main|master)' | sed 's/origin\///' | head -n 1)
+BASE_BRANCH=${BASE_BRANCH:-main}
 
 # Default to HEAD if no argument is provided
-CURRENT_BRANCH=${2:-HEAD}
+CURRENT_BRANCH=HEAD
 
 log "Checking commit messages between:"
 log "- base branch: $BASE_BRANCH"
