@@ -1,0 +1,16 @@
+# action.yml
+name: 'Git Commit Standards'
+description: 'Ensure commit messages follow the conventional commit standard'
+inputs:
+  max-message-length:
+    description: 'Maximum length of commit message'
+    required: true
+    default: 72
+outputs:
+  time: # id of output
+    description: 'The time we greeted you'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.who-to-greet }}
