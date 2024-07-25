@@ -2,10 +2,30 @@
 name: 'Git Commit Standards'
 description: 'Ensure commit messages follow the conventional commit standard'
 inputs:
-  max-message-length:
-    description: 'Maximum length of commit message'
-    required: true
-    default: 72
+  must-have-subject-line:
+    description: 'Whether the commit message must have a subject line'
+    required: false
+    default: true
+  subject-line-capitalised:
+    description: 'Whether the first word in the subject line must be capitalised'
+    required: false
+    default: true
+  no-period-at-end-of-subject-line:
+    description: 'Whether the subject line must not end with a period'
+    required: false
+    default: true
+  first-word-in-subject-line-is-imperative-verb:
+    description: 'Whether the first word in the subject line must be an imperative verb'
+    required: false
+    default: true
+  body-must-have-blank-line:
+    description: 'Whether the body must have a blank line between it and the subject line'
+    required: false
+    default: true
+  body-must-be-wrapped-at-72-characters:
+    description: 'Whether the body must be wrapped at 72 characters'
+    required: false
+    default: true
 outputs:
   time: # id of output
     description: 'The time we greeted you'
@@ -13,4 +33,9 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.max-message-length }}
+    - ${{ inputs.must-have-subject-line }}
+    - ${{ inputs.subject-line-capitalised }}
+    - ${{ inputs.no-period-at-end-of-subject-line }}
+    - ${{ inputs.first-word-in-subject-line-is-imperative-verb }}
+    - ${{ inputs.body-must-have-blank-line }}
+    - ${{ inputs.body-must-be-wrapped-at-72-characters }}
